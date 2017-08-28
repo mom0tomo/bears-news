@@ -4,12 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"os"
-
-	"github.com/joho/godotenv"
+	"log"
 )
 
 // Slack is Message Struct.
@@ -19,11 +17,15 @@ type Slack struct {
 }
 
 func main() {
+	// environment variables will be only used for local dev environment.
+	os.Setenv("WEBHOOK_URL", "Your Slack WebHook URL")
+	os.Setenv("SLACK_CHANNEL", "Your Slack channel")
+
 	// IncomingURL is Slack incoming webhook URL.
 	IncomingURL := os.Getenv("WEBHOOK_URL")
 
 	params, err := json.Marshal(Slack{
-		"ʕ ◔ϖ◔ʔ < Hello",
+		"ʕ•ᴥ•ʔ＜Hello",
 		os.Getenv("SLACK_CHANNEL"),
 	})
 	if err != nil {
@@ -45,10 +47,4 @@ func main() {
 	}
 
 	fmt.Println(string(body))
-}
-
-func init() {
-	if err := godotenv.Load(); err != nil {
-		log.Fatal("環境変数を読み込めませんでした")
-	}
 }
